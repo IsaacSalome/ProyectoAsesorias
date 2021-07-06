@@ -260,7 +260,7 @@ return [
         ],
         [
             'text' => 'Docentes',
-            'url'  => '/docente',
+            'url'  => '/Docente',
             'icon' => 'fas fa-chalkboard-teacher',
         ],
 
