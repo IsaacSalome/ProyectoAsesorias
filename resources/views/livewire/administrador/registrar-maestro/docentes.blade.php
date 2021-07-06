@@ -41,7 +41,7 @@
 
                             <button wire:click="editar( {{ $item->id }} )"
                                 class="px-2 py-2 font-bold text-white bg-blue-500 hover:bg-blue-600"><span
-                                    class="fas fa-edit"></span><button>
+                                    class="fas fa-edit"  data-toggle="modal" data-target="#exampleModal"></span><button>
                                     <button wire:click="borrar({{ $item->id }})"
                                         class="px-2 py-2 font-bold text-white bg-red-500 hover:bg-red-700"><span
                                             class="fas fa-trash"></span></button>

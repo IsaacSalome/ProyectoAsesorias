@@ -59,7 +59,7 @@
                                 <td class="px-4 py-2 border">
     
                                     <button wire:click="editar({{ $item->idSolicitud }})"
-                                        class="px-4 py-2 font-bold text-white bg-blue-500 hover:bg-blue-600" ><span class="fas fa-edit"></span><button>
+                                        class="px-4 py-2 font-bold text-white bg-blue-500 hover:bg-blue-600"  data-toggle="modal" data-target="#exampleModal" ><span class="fas fa-edit"></span><button>
                                             <button wire:click="borrar({{$item->idSolicitud }})"
                                                 class="px-4 py-2 font-bold text-white bg-red-500 hover:bg-red-700"><span class="fas fa-trash"></span></button>
     

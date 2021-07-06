@@ -41,7 +41,7 @@
                             <td class="px-2 py-2 border">
 
                                 <button wire:click="editar({{ $materia->id }})"
-                                    class="px-2 py-2 font-bold text-white bg-blue-500 hover:bg-blue-600"><span
+                                    class="px-2 py-2 font-bold text-white bg-blue-500 hover:bg-blue-600"  data-toggle="modal" data-target="#exampleModal"><span
                                         class="fas fa-edit"></span><button>
                                         <button wire:click="borrar({{ $materia->id }})"
                                             class="px-2 py-2 font-bold text-white bg-red-500 hover:bg-red-700"><span
