@@ -18,8 +18,33 @@ class Alumno extends Component
 {
     use WithPagination;
 
-    public $modal = false;
     public  $carreras, $semestres,$idEstudiantes, $id_user ,$modalidades, $name, $nombre, $numeroControl,$pass ,$apellidos,$grupo,$Carreras_idCarreras,$Semestres_idSemestres,$Modalidades_idModalidades;
+    public $modal = false;
+
+
+    protected $rules = [
+        'nombre' => 'required',
+        'apellidos' => 'required',
+        'numeroControl' => 'required',
+        'grupo' => 'required',
+        'Carreras_idCarreras' => 'required',
+        'Semestres_idSemestres' => 'required',
+        'Modalidades_idModalidades' => 'required',
+        'pass' => 'required',
+
+    ];
+    protected $messages = [
+        'nombre.required' => 'El nombre no puede estar vacío.',
+        'apellidos.required' => 'Los apellidos no puede estar vacío.',
+        'numeroControl.required' => 'El Numero de Control no puede estar vacío.',
+        'grupo.required' => 'El grupo no puede estar vacío.',
+        'Carreras_idCarreras.required' => 'Seleccione una carrera.',
+        'Semestres_idSemestres.required' => 'Seleccione un Semestre..',
+        'Modalidades_idModalidades.required' => 'Seleccione una modalidad.',
+        'pass.required' => 'Contraseña invalida.',
+
+    ];
+
 
     public function render()
     {
@@ -45,9 +70,16 @@ class Alumno extends Component
     }
 
     public function limpiar(){
-        $this->nombreMateria = ' ';
-        $this->Carreras_idCarreras = ' ';
+        $this->nombre = ' ';
+        $this->apellidos = ' ';
+        $this->numeroControl= ' ';
+        $this->grupo= ' ';
+        $this->Carreras_idCarreras= ' ';
         $this->Semestres_idSemestres= ' ';
+        $this->Modalidades_idModalidades= ' ';
+        $this->pass= '';
+
+
     }
 
     public function editar($id){
@@ -81,7 +113,8 @@ class Alumno extends Component
     }
 
     Public function guardar(){
-    
+        $this->validate();
+
         if($this->id_user != null){
            User::where('id_user', $this->id_user)
            ->update([                
@@ -105,8 +138,6 @@ class Alumno extends Component
                 'Modalidades_idModalidades' => $this->Modalidades_idModalidades,
                 'Users_id' =>  $this->id_user
              ]);
-             $this->cerrarModal();
-             $this->limpiar();
         }
 
         else {
@@ -132,37 +163,9 @@ class Alumno extends Component
         ]);
 
         Estudiantes::create($estudiante);
-        $this->cerrarModal();
-        $this->limpiar();
+
         }
 
-/*
-    User::updateOrCreate(['id_user' => $this->id_user],
-        [
-            'name' => $this->nombre,
-            'email' => $this->numeroControl,
-            'password' =>$this->pass,
-    ]);
-
-    $data = DB::table('users')->latest()->first();
-
-    Estudiantes::updateOrCreate(['idEstudiantes' => $this->idEstudiantes],
-        [
-            'nombre' => $this->nombre,
-            'apellido' => $this->apellidos,
-            'grupo' => $this->grupo,
-
-            'Carreras_idCarreras' => $this->Carreras_idCarreras,
-            'Semestres_idSemestres' =>$this->Semestres_idSemestres,
-            'Modalidades_idModalidades' => $this->Modalidades_idModalidades,
-            'Users_id' =>  $data->id_user
-
-    ]);
-
-       // session()->flash('message',
-       // $this->idMateria ? '¡Actualización exitosa!' : '¡Alta Exitosa!');
-
         $this->cerrarModal();
-        $this->limpiar();*/
     }
 }

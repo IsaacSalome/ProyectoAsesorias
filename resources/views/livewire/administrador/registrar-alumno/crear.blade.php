@@ -17,6 +17,8 @@
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="nombre" wire:model="nombre">
+                                @error('nombre') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
                         </div>
 
                         <div class="mb-4">
@@ -24,6 +26,8 @@
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="apellidos" wire:model="apellidos">
+                                @error('apellidos') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
                         </div>
                         <div class="mb-4">
                             <label for="numeroControl" class="block mb-2 text-sm font-bold text-gray-700 ">Número
@@ -31,12 +35,16 @@
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="numeroControl" wire:model="numeroControl">
+                                @error('nombre') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
                         </div>
                         <div class="mb-4">
                             <label for="grupo" class="block mb-2 text-sm font-bold text-gray-700 ">Grupo</label>
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="grupo" wire:model="grupo">
+                                @error('grupo') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
                         </div>
 
 
@@ -47,13 +55,15 @@
                             <select id="Carreras_idCarreras" wire:model="Carreras_idCarreras"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 name="select">
-                                <option value="null">Selecciona una carrera... </option>
+                                <option value=" ">Selecciona una carrera... </option>
 
                                 @foreach ($carreras as $carrera)
                                     <option value="{{ $carrera->idCarreras }}">{{ $carrera->nombreCarrera }}
                                     </option>
                                 @endforeach
                             </select>
+                            @error('Carreras_idCarreras') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
                         </div>
 
                         <div class="mb-4">
@@ -62,13 +72,15 @@
                             <select id="Semestres_idSemestres" wire:model="Semestres_idSemestres"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 name="Semestres_idSemestres">
-                                <option value="null">Selecciona un semestre... </option>
+                                <option value=" ">Selecciona un semestre... </option>
 
                                 @foreach ($semestres as $semestre)
                                     <option value="{{ $semestre->idSemestres }}">{{ $semestre->numeroSemestre }}
                                     </option>
                                 @endforeach
                             </select>
+                            @error('Semestres_idSemestres') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
                         </div>
 
 
@@ -78,13 +90,15 @@
                             <select id="Modalidades_idModalidades" wire:model="Modalidades_idModalidades"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 name="Modalidades_idModalidades">
-                                <option value="null">Selecciona una Modalidad... </option>
+                                <option value=" ">Selecciona una Modalidad... </option>
 
                                 @foreach ($modalidades as $modalidad)
                                     <option value="{{ $modalidad->idModalidades }}">
                                         {{ $modalidad->nombreModalidad }}</option>
                                 @endforeach
                             </select>
+                            @error('Modalidades_idModalidades') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
                         </div>
 
                         <div class="mb-4">
@@ -92,17 +106,19 @@
                             <input type="password"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="pass" wire:model="pass">
+                                @error('pass') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
                         </div>
 
                         <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
 
                             <span class="flex w-full shadow-sm rounde-md sm:ml-3 sm:w-auto">
-                                <button wire:click.prevent="guardar()" type="button"
+                                <button wire:click.prevent="guardar()"  type="button"
                                     class="inline-flex justify-center w-full px-4 py-2 text-white transition duration-150 ease-in-out bg-green-600 border border-transparent rounded-md focus:outline-none focus:border-green-700 focus:shadow-outline-green sm:text-sm sm:leading-5 ">Guardar</button>
                             </span>
 
                             <span class="flex w-full shadow-sm rounde-md sm:ml-3 sm:w-auto">
-                                <button wire:click.prevent="cerrarModal()" type="button"
+                                <button wire:click.prevent="cerrarModal()"  data-dismiss="modal" type="button"
                                     class="inline-flex justify-center w-full px-4 py-2 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md focus:outline-none focus:border-green-700 focus:shadow-outline-green sm:text-sm sm:leading-5 ">Cancelar</button>
                             </span>
                         </div>

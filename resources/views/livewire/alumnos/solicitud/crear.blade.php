@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label for="justificacion">Justificación de Asesoría</label>
                         <textarea  type="textarea" class="form-control" id="justificacion" placeholder="justificacion" wire:model="justificacion"></textarea>
-                        @error('justificacion') <span class="text-danger error">{{ $message }}</span>@enderror
+                        @error('justificacion') <span style="color:red;" class="error">{{ $message }}</span> @enderror
                     </div>
 
 
@@ -24,12 +24,14 @@
                         <select id="idMateria" wire:model="idMateria"
                             class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                             name="idMateria">
-                            <option value="null">Selecciona una materia... </option>
+                            <option value=" " selected>Selecciona una materia... </option>
     
                             @foreach ($materia as $ma)
                                 <option value="{{ $ma->idMateria }}">{{ $ma->nombreMateria }}</option>
                             @endforeach
                         </select>
+                        @error('idMateria') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
                     </div>
     
                 </form>
@@ -43,7 +45,7 @@
                     </span>
 
                     <span class="flex w-full shadow-sm rounde-md sm:ml-3 sm:w-auto">
-                        <button wire:click.prevent="cerrarModal()" type="button"
+                        <button wire:click.prevent="cerrarModal()" data-dismiss="modal" type="button"
                             class="inline-flex justify-center w-full px-4 py-2 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md focus:outline-none focus:border-green-700 focus:shadow-outline-green sm:text-sm sm:leading-5 ">Cancelar</button>
                     </span>
                 </div>

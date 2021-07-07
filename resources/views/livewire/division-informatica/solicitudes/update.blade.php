@@ -19,7 +19,8 @@
                             <option value="null">Selecciona una opción... </option>
                             <option value="Autorizada">Autorizada</option>
                             <option value="Rechazada">Rechazada</option>
-                           
+                            <option value="revisión">En revisión</option>
+
                         </select>
                     </div>
     

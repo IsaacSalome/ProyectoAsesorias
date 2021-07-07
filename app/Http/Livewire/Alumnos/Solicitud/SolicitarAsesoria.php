@@ -18,6 +18,19 @@ class SolicitarAsesoria extends Component
     public  $estudiante, $idEstudiante, $materia, $idSolicituAsesorias, $justificacion, $estado, $idEstudiantes, $idMateria;
     public $modal = false;
 
+    protected $rules = [
+        'justificacion' => 'required',
+        'idMateria' => 'required',
+ 
+
+    ];
+    protected $messages = [
+        'justificacion.required' => 'La justificación no puede estar vacío.',
+        'idMateria.required' => 'Seleccione una materia',
+
+
+    ];
+
     public function render()
     {
  
@@ -32,9 +45,8 @@ class SolicitarAsesoria extends Component
         return view('livewire.alumnos.solicitud.solicitar-asesoria', compact('vistaSA'));
     }
     public function limpiar(){
-        $this->nombreMateria = ' ';
-        $this->Carreras_idCarreras1 = ' ';
-        $this->Semestres_idSemestres= ' ';
+        $this->justificacion = ' ';
+        $this->idMateria = ' ';
     }
 
     public function crear(){
@@ -67,6 +79,8 @@ class SolicitarAsesoria extends Component
     }
 
     Public function guardar(){
+        $this->validate();
+
         $idusuario = auth()->id();
         $idEstudiante = Estudiantes::select('idEstudiantes')->where('Users_id',$idusuario)->get();
         $variableidE= $idEstudiante[0]['idEstudiantes'];
