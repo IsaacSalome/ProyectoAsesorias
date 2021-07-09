@@ -1,4 +1,55 @@
 <div>
+
+    <ul class="nav justify-content-end">
+        <li>
+            <div class="btn-group dropleft">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-bell" data-toggle="modal"> <span class="badge badge-success navbar-badge">
+                            {{ $notificacion->count() }}</span></span>
+                </button>
+                <div class="dropdown-menu">
+                    <div class="card" style="width: 40rem;">
+                        @if ($notificacion->count() == 0)
+                        <div class="card-body">
+                            <center>
+                                <p>No hay notificaciones nuevas</p>
+                            </center>
+                        </div>
+
+                        @else
+
+                        <ul class="list-group list-group-flush">
+                            @foreach ($notificacion as $not)
+                            <li class="list-group-item">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-tools">
+                                            <button wire:click=" notifydelete({{ $not->idnotif }})" type="button"
+                                                class=" btn-outline-danger btn-sm">x</button>
+                                        </div>
+                                        <h3 class="card-title">
+                                            <p>Tu solicitud de asesoría con la materia: {{$not->nombreMateria}} ya cuenta con {{$not->tipo}} 
+                                            </p>
+                                            <span class="text-xs text-gray-500" tyle=" size: 10px;">fecha:
+                                                {{ $not->Fecha }}</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </li>
+                            @endforeach
+
+                        </ul>
+                        @endif
+                    </div>
+
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
+
     <div class="py-12">
         <div class="mx-auto max-w-7x1 sm:px6 lg:px-8">
             <div class="px-4 py-4 overflow-auto bg-white shadow-xl sm:rounded-lg">

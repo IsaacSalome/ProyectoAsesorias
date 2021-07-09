@@ -5,19 +5,25 @@ namespace App\Http\Livewire\DivisionInformatica\Solicitudes;
 use App\Models\vistas\solicitudes_estudiantes as Solicitudes;
 use  App\Models\vistas\Revision_Solicitudes as Revision;
 use  App\Models\solicituasesorias;
+use App\Models\Notificaciones as notif;
+
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class RevisionSolicitudes extends Component
 {
-    public  $estado, $idSolicitud, $estudiante, $justificacion, $materiaSolicitada;
+    public  $notificacion,$notif, $estado, $idSolicitud, $estudiante, $justificacion, $materiaSolicitada;
     use WithPagination;
     public $modal = false;
     public $visualizar = false;
 
     public function render()
     {
+        $this->notificacion = DB::select('CALL notifi_solicitud');
+        $this->notif = notif::all();
+
+
         $vistaRE = Revision::where('estado', 'revisión')->orwhere('estado', 'Rechazada')->paginate(5);
 
         return view('livewire.division-informatica.solicitudes.revision-solicitudes', compact('vistaRE'));
@@ -74,7 +80,22 @@ class RevisionSolicitudes extends Component
             'idSolicituAsesorias' => $this->idSolicitud,
             'estado' => $this->estado,
         ]);
+        if($this->estado == 'Autorizada'){
+            $datos_notif = ([
+                'tipo' => 'Autorización',
+                'idSolicituAsesorias' => $this->idSolicitud,
+         
+        
+            ]);
+        
+            notif::create($datos_notif);
+        }
         $this->cerrarModal();
 
     }
+    public function notifydelete($id){
+        notif::find($id)->delete();
+
+    }
+ 
 }

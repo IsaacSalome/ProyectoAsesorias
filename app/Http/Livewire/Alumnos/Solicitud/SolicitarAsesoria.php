@@ -8,6 +8,8 @@ use App\Models\solicituasesorias as sol;
 use App\Models\Estudiantes;
 use App\Models\User;
 use App\Models\Materia;
+use App\Models\Notificaciones as notif;
+use App\Models\vistas\vistanotifAuto;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 class SolicitarAsesoria extends Component
 {
     use WithPagination;
-    public  $estudiante, $idEstudiante, $materia, $idSolicituAsesorias, $justificacion, $estado, $idEstudiantes, $idMateria;
+    public  $notificacion,$notif, $estudiante, $idEstudiante, $materia, $idSolicituAsesorias, $justificacion, $estado, $idEstudiantes, $idMateria;
     public $modal = false;
 
     protected $rules = [
@@ -33,10 +35,13 @@ class SolicitarAsesoria extends Component
 
     public function render()
     {
- 
+      
+
         $idusuario = auth()->id();
         $idEstudiante = Estudiantes::select('idEstudiantes')->where('Users_id',$idusuario)->get();
         $variableidE= $idEstudiante[0]['idEstudiantes'];
+
+        $this->notificacion = vistanotifAuto::Where('id_user',$idusuario)->get();
 
        $vistaSA = Solicitudes::where('idEstudiantes', $variableidE)->paginate(5);
         $this->estudiante = Estudiantes::all();
@@ -93,9 +98,24 @@ class SolicitarAsesoria extends Component
             'idMateria' =>$this->idMateria
 
     ]);
+    $lastid = DB::table('solicituasesorias')->latest()->first();
+
+    $datos_notif = ([
+        'tipo' => 'Solicitud',
+        'idSolicituAsesorias' => $lastid->idSolicituAsesorias,
+ 
+
+    ]);
+
+    notif::create($datos_notif);
+
     session()->flash('message',
         $this->idSolicituAsesorias ? '¡Actualización exitosa!' : '¡Alta Exitosa!');
 
         $this->cerrarModal();
+    }
+    public function notifydelete($id){
+        notif::find($id)->delete();
+
     }
 }
