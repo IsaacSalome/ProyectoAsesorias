@@ -3,12 +3,16 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Livewire\Administrador\Materias;
+use App\Http\Livewire\Administrador\HorarioMateria\HorarioMaterias;
+
 use App\Http\Livewire\Administrador\RegistrarAlumno\Alumno;
 use App\Http\Livewire\Administrador\RegistrarMaestro\Docente;
 
 use App\Http\Livewire\DivisionInformatica\Solicitudes\RevisionSolicitudes as revision;
 
 use App\Http\Livewire\Alumnos\Solicitud\SolicitarAsesoria;
+use App\Http\Livewire\Alumnos\Horario\Horario;
+use App\Http\Livewire\Docentes\Horarios\Horario as horarioDocentes;
 use App\Http\Livewire\DivisionInformatica\Solicitudes\ProgramacionAsesorias;
 
 /*
@@ -36,6 +40,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/Revision-Asesoria',revision::class)->name('RevisionAsesoria');
     Route::get('/programacion-Asesoria',ProgramacionAsesorias::class)->name('ProgramacionAsesoria');
 
+    Route::get('/Horario-materia',HorarioMaterias::class)->name('HorarioMaterias');
+    Route::get('/Horario-alumno',Horario::class)->name('HorarioAlumno');
+    
+    Route::get('/Docente/Horarios', horarioDocentes::class)->name('HorarioDocente');
+    
     Route::get('/dashboard',function () {
         return view('dashboard');
     })->name('dashboard');

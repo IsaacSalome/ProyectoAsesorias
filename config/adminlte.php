@@ -264,6 +264,12 @@ return [
             'icon' => 'fas fa-chalkboard-teacher',
         ],
 
+        [
+            'text' => 'HorariosMateria',
+            'url'  => '/Horario-materia',
+            'icon' => 'fas fa-clock',
+        ],
+
         ['header' => 'Division Informática'],
         [
             'text' => 'Solicitudes',
@@ -282,12 +288,17 @@ return [
             'url'  => '/Solicitar-Asesoria',
             'icon' => 'fas fa-ad',
         ],
-
-        ['header' => 'Opciones de Docente'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Horario',
+            'url'  => '/Horario-alumno',
+            'icon' => 'fas fa-clock',
+        ],
+        ['header' => 'Opciones de Docente'],
+
+        [
+            'text' => 'Horario',
+            'url'  => '/Docente/Horarios',
+            'icon' => 'fas fa-clock',
         ],
     ],
 
@@ -376,7 +387,7 @@ return [
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
                 ],
             ],

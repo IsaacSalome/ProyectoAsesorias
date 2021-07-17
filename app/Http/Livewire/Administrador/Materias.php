@@ -12,20 +12,44 @@ use Livewire\Component;
 
 class Materias extends Component
 {
-        use WithPagination;
 
-    public  $carreras, $semestres, $materias, $nombreMateria, $idMateria, $Carreras_idCarreras1, $Semestres_idSemestres;
+    public $search;
+    public $sort='id';
+    public $direction='asc';
+
+    use WithPagination;
+    public  $carreras, $semestres, $materias, $nombreMateria, $idMateria, $Carreras_idCarreras1;
     public $modal = false;
 
     public function render()
     {
         $this->materias = Materia::all();
-        $vistaM = vistaMaterias::paginate(5);
+
+        $vistaM = vistaMaterias::where('materia', 'like','%'.$this->search.'%')
+        ->orderBy($this->sort, $this->direction)
+        ->paginate(5);
 
         $this->semestres= Semestres::all();
         $this->carreras= Carreras::all();
         return view('livewire.administrador.materias',compact('vistaM'));
     }
+
+    public function order($sort){
+
+        if ($this->sort == $sort) {
+            
+            if ($this->direction == 'desc') {
+                $this->direction = 'asc';
+            } else {
+                $this->direction = 'desc';
+            }
+
+        } else {
+            $this->sort = $sort;
+        }
+
+    }
+
     public function crear(){
         $this->limpiar();
         $this->abrirModal();
@@ -42,15 +66,14 @@ class Materias extends Component
     public function limpiar(){
         $this->nombreMateria = ' ';
         $this->Carreras_idCarreras1 = ' ';
-        $this->Semestres_idSemestres= ' ';
     }
 
     public function editar($id){
+        $this->abrirModal();
         $producto = Materia::findOrFail($id);
         $this->idMateria= $id;
         $this->nombreMateria = $producto->nombreMateria;
         $this->Carreras_idCarreras1 = $producto->Carreras_idCarreras1;
-        $this->Semestres_idSemestres = $producto->Semestres_idSemestres;
 
         $this->abrirModal();
     }
@@ -67,7 +90,6 @@ class Materias extends Component
         [
             'nombreMateria' => $this->nombreMateria,
             'Carreras_idCarreras1' => $this->Carreras_idCarreras1,
-            'Semestres_idSemestres' =>$this->Semestres_idSemestres
     ]);
     session()->flash('message',
         $this->idMateria ? '¡Actualización exitosa!' : '¡Alta Exitosa!');

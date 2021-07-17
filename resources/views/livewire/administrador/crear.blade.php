@@ -36,27 +36,12 @@
                             </select>
                         </div>
 
-                        <div class="mb-4">
-                            <label for="Semestres_idSemestres"
-                                class="block mb-2 text-sm font-bold text-gray-700 ">Semestre</label>
-                            <select id="Semestres_idSemestres" wire:model="Semestres_idSemestres"
-                                class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                name="Semestres_idSemestres">
-                                <option value="null">Selecciona un semestre... </option>
-
-                                @foreach ($semestres as $semestre)
-                                    <option value="{{ $semestre->idSemestres }}">{{ $semestre->numeroSemestre }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
 
 
                         <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
 
                             <span class="flex w-full shadow-sm rounde-md sm:ml-3 sm:w-auto">
-                                <button wire:click.prevent="guardar()" type="button"
+                                <button wire:click.prevent="guardar()" data-dismiss="modal" type="button"
                                     class="inline-flex justify-center w-full px-4 py-2 text-white transition duration-150 ease-in-out bg-green-600 border border-transparent rounded-md focus:outline-none focus:border-green-700 focus:shadow-outline-green sm:text-sm sm:leading-5 ">Guardar</button>
                             </span>
 
