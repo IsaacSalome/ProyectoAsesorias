@@ -39,10 +39,10 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="mb-3 input-group">
-                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" placeholder="Correo electrónico"
-                           name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <input id="numeroControl" type="text" class="form-control @error('numeroControl') is-invalid @enderror" placeholder="Número De control"
+                           name="numeroControl" value="{{ old('numeroControl') }}" required autocomplete="numeroControl" autofocus>
 
-                    @error('email')
+                    @error('numeroControl')
                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

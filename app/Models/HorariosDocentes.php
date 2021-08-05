@@ -9,6 +9,6 @@ class HorariosDocentes extends Model
 {
     use HasFactory;
     protected $table = 'horariosdocentes';
-    protected $primaryKey = 'idHorariosAlumnos';
-    protected $fillable=['Horarios_idHorarios','Docentes_idDocentes'];
+    protected $primaryKey = 'idHorariosDocentes';
+    protected $fillable=['Horarios_id','Docentes_id'];
 }

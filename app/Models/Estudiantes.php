@@ -10,5 +10,5 @@ class Estudiantes extends Model
     use HasFactory;
     protected $table = 'estudiantes';
     protected $primaryKey = 'idEstudiantes';
-    protected $fillable=['nombre','apellido','grupo','Carreras_idCarreras','Semestres_idSemestres','Modalidades_idModalidades','Users_id'];
+    protected $fillable=['nombre','apellido','grupo','Carreras_id','Semestres_id','Modalidades_id','id_user'];
 }

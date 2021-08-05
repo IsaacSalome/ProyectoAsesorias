@@ -1,20 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Livewire\Administrador\Materias;
 use App\Http\Livewire\Administrador\HorarioMateria\HorarioMaterias;
-
 use App\Http\Livewire\Administrador\RegistrarAlumno\Alumno;
 use App\Http\Livewire\Administrador\RegistrarMaestro\Docente;
-
 use App\Http\Livewire\DivisionInformatica\Solicitudes\RevisionSolicitudes as revision;
-
 use App\Http\Livewire\Alumnos\Solicitud\SolicitarAsesoria;
 use App\Http\Livewire\Alumnos\Horario\Horario;
 use App\Http\Livewire\Docentes\Horarios\Horario as horarioDocentes;
 use App\Http\Livewire\DivisionInformatica\Solicitudes\ProgramacionAsesorias;
-
+use App\Http\Controllers\AsesoriaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,20 +27,24 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/Materia',Materias::class)->name('materias');
-    //Route::post('/Materia',Materias::class)->name('materias');
+    //Route de Administración
+    Route::get('/Materia',Materias::class)->middleware('can:materias')->name('materias');
+    Route::get('/Alumno',Alumno::class)->middleware('can:RegistroAlumnos')->name('RegistroAlumnos');
+    Route::get('/Docente',Docente::class)->middleware('can:RegistroDocente')->name('RegistroDocente');
+    Route::get('/Horario-materia',HorarioMaterias::class)->middleware('can:HorarioMaterias')->name('HorarioMaterias');
 
-    Route::get('/Alumno',Alumno::class)->name('RegistroAlumnos');
-    Route::get('/Docente',Docente::class)->name('RegistroDocente');
-    Route::get('/Solicitar-Asesoria',SolicitarAsesoria::class)->name('SolicitarAsesoria');
-    Route::get('/Revision-Asesoria',revision::class)->name('RevisionAsesoria');
-    Route::get('/programacion-Asesoria',ProgramacionAsesorias::class)->name('ProgramacionAsesoria');
+    //Route de Alumno
+    Route::get('/Solicitar-Asesoria',SolicitarAsesoria::class)->middleware('can:SolicitarAsesoria')->name('SolicitarAsesoria');
+    Route::get('/Horario-alumno',Horario::class)->middleware('can:HorarioAlumno')->name('HorarioAlumno');
 
-    Route::get('/Horario-materia',HorarioMaterias::class)->name('HorarioMaterias');
-    Route::get('/Horario-alumno',Horario::class)->name('HorarioAlumno');
-    
-    Route::get('/Docente/Horarios', horarioDocentes::class)->name('HorarioDocente');
-    
+    //Route de Division
+    Route::get('/Revision-Asesoria',revision::class)->middleware('can:RevisionAsesoria')->name('RevisionAsesoria');
+    Route::get('/programacion-Asesoria',ProgramacionAsesorias::class)->middleware('can:ProgramacionAsesoria')->name('ProgramacionAsesoria');
+    Route::resource('/programacion-Asesoria/store', AsesoriaController::class)->middleware('can:CrearProgramacion')->names('CrearProgramacion')->only('store'); 
+
+    //Route de Docente
+    Route::get('/Docente/Horarios', horarioDocentes::class)->middleware('can:HorarioDocente')->name('HorarioDocente');
+
     Route::get('/dashboard',function () {
         return view('dashboard');
     })->name('dashboard');

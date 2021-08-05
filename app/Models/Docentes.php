@@ -10,5 +10,5 @@ class Docentes extends Model
     use HasFactory;
     protected $table = 'docentes';
     protected $primaryKey = 'idDocentes';
-    protected $fillable=['nombre','apellidos','users_id_user'];
+    protected $fillable=['nombre','apellidos','id_user'];
 }

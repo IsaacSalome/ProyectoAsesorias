@@ -247,58 +247,74 @@ return [
             'can'  => 'manage-blog',
         ],
         
-        ['header' => 'Opciones de Administrador'],
+        ['header' => 'Opciones de Administrador', 'can' => 'materias'],
         [
             'text' => 'Materias',
             'url'  => '/Materia',
             'icon' => 'fab fa-readme',
+            'can' => 'materias'
         ],
         [
             'text' => 'Alumnos',
             'url'  => '/Alumno',
             'icon' => 'fas fa-user-graduate',
+            'can' => 'RegistroAlumnos'
         ],
         [
             'text' => 'Docentes',
             'url'  => '/Docente',
             'icon' => 'fas fa-chalkboard-teacher',
+            'can' => 'RegistroDocente'
+
         ],
 
         [
             'text' => 'HorariosMateria',
             'url'  => '/Horario-materia',
             'icon' => 'fas fa-clock',
+            'can' => 'HorarioMaterias'
+
         ],
 
-        ['header' => 'Division Informática'],
+        ['header' => 'Division Informática', 'can' => 'RevisionAsesoria'],
         [
             'text' => 'Solicitudes',
             'url'  => '/Revision-Asesoria',
             'icon' => 'fas fa-spell-check',
+            'can' => 'RevisionAsesoria'
+
         ],
         [
             'text' => 'Programaciones',
             'url'  => '/programacion-Asesoria',
             'icon' => 'fas fa-tasks',
+            'can' => 'ProgramacionAsesoria'
+
         ],
 
-        ['header' => 'Opciones de Estudiante'],
+        ['header' => 'Opciones de Estudiante', 'can' => 'SolicitarAsesoria'],
         [
             'text' => 'Solicitar Asesoria',
             'url'  => '/Solicitar-Asesoria',
             'icon' => 'fas fa-ad',
+            'can' => 'SolicitarAsesoria'
+
         ],
         [
             'text' => 'Horario',
             'url'  => '/Horario-alumno',
             'icon' => 'fas fa-clock',
+            'can' => 'HorarioAlumno'
+
         ],
-        ['header' => 'Opciones de Docente'],
+        ['header' => 'Opciones de Docente', 'can' => 'HorarioDocente'],
 
         [
             'text' => 'Horario',
             'url'  => '/Docente/Horarios',
             'icon' => 'fas fa-clock',
+            'can' => 'HorarioDocente'
+
         ],
     ],
 
