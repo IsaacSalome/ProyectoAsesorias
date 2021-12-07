@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class vistanotifAuto extends Model
 {
     use HasFactory;
-    protected $table = 'view_notifaut';
+    protected $table = 'vista_notificacion_alumos';
     protected $primaryKey = 'idnotif';
 
 }

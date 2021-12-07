@@ -12,6 +12,7 @@ use App\Models\Notificaciones as notif;
 use App\Models\vistas\vistanotifAuto;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Mail;
 
 
 class SolicitarAsesoria extends Component
@@ -38,7 +39,7 @@ class SolicitarAsesoria extends Component
       
 
         $idusuario = auth()->id();
-        $idEstudiante = Estudiantes::select('idEstudiantes')->where('Users_id',$idusuario)->get();
+        $idEstudiante = Estudiantes::select('idEstudiantes')->where('id_user',$idusuario)->get();
         $variableidE= $idEstudiante[0]['idEstudiantes'];
 
         $this->notificacion = vistanotifAuto::Where('id_user',$idusuario)->get();
@@ -78,7 +79,8 @@ class SolicitarAsesoria extends Component
     }
 
     public function borrar($id){
-        Solicitudes::find($id)->delete();
+        notif::select('idNotificaciones')->where('idSolicituAsesorias',$id)->delete();
+        sol::find($id)->delete();
         session()->flash('message', 'Registro eliminado correctamente.');
 
     }
@@ -87,13 +89,17 @@ class SolicitarAsesoria extends Component
         $this->validate();
 
         $idusuario = auth()->id();
-        $idEstudiante = Estudiantes::select('idEstudiantes')->where('Users_id',$idusuario)->get();
+        $idEstudiante = Estudiantes::select('idEstudiantes')->where('id_user',$idusuario)->get();
         $variableidE= $idEstudiante[0]['idEstudiantes'];
+
+        $nombreEstudiante = Estudiantes::where('id_user', $idusuario)->get();
+
+
 
         sol::updateOrCreate(['idSolicituAsesorias' => $this->idSolicituAsesorias],
         [
             'justificacion' => $this->justificacion,
-            'estado' =>'revisión',
+            'estado' =>'4',// 1= Autorizacion, 2 = Cancelada, 3 = Programada, 4 = En revision
             'idEstudiantes' =>$variableidE,
             'idMateria' =>$this->idMateria
 
@@ -109,13 +115,47 @@ class SolicitarAsesoria extends Component
 
     notif::create($datos_notif);
 
-    session()->flash('message',
-        $this->idSolicituAsesorias ? '¡Actualización exitosa!' : '¡Alta Exitosa!');
+    $materia = Materia::select('nombreMateria')->Where('idMateria',$this->idMateria)->get();
 
-        $this->cerrarModal();
+
+    foreach ($nombreEstudiante as $nom){
+        foreach ($materia as $mat){
+
+        $data =[
+            'subject' => 'Solicitud de asesoría',
+            'name' => $nom->nombre.$nom->apellido,
+            'email' => 'isaacsalome1704@gmail.com',
+            'content' => 'El alumno '.$nom->nombre.$nom->apellido.' a solicitado una asesoría para la materia '.$mat->nombreMateria
+        ];
     }
+    }
+    $this->sendEmail($data);
+        $this->idSolicituAsesorias ? toast('Tú registro fue actualizado correctamente','success') : toast('Registro Guardado con éxito','success');
+
+        return redirect('/Solicitar-Asesoria');
+    }
+
+
     public function notifydelete($id){
         notif::find($id)->delete();
 
+    }
+
+    public function sendEmail($data)
+    {
+
+       /* $data = [
+          'subject' => $request->subject,
+          'name' => $request->name,
+          'email' => $request->email,
+          'content' => $request->content
+        ];*/
+
+        Mail::send('email.email-template', $data, function($message) use ($data) {
+          $message->to($data['email'])
+          ->subject($data['subject']);
+        });
+        toast('Notificación enviada','success');
+        return back();
     }
 }

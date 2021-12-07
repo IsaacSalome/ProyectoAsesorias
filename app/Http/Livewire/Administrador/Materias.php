@@ -31,6 +31,7 @@ class Materias extends Component
 
         $this->semestres= Semestres::all();
         $this->carreras= Carreras::all();
+        
         return view('livewire.administrador.materias',compact('vistaM'));
     }
 

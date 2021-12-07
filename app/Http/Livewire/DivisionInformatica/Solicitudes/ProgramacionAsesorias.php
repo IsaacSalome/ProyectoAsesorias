@@ -16,7 +16,7 @@ class ProgramacionAsesorias extends Component
     public $idRevicion, $Exist_Asesoria = null, $idDocente,$semanas, $HoraInicial, $HoraFinal, $fechaAsesoria,$docentes,$estudiantes, $idEstudiantes, $vista, $datosEst, $nombre, $apellidos;
   
     use WithPagination;
-    public $programacion = false;
+    public $modal = false;
 
     public $vistaDH , $selectDocente= null, $selectHD = null;
 
@@ -26,31 +26,26 @@ class ProgramacionAsesorias extends Component
         $this->Exist_Asesoria = Asesorias::Where('idSolicitud', $this->idRevicion);
          }*/
          
-        $vistaRE = Revision::Where('estado','Autorizada')->
-        OrWhere('estado','Cancelada')
-        ->orWhere('estado','Programada')->orderBy('estado', 'ASC')->get();
+        $vistaRE = Revision::Where('estado','1')->
+        OrWhere('estado','2')
+        ->orWhere('estado','3')->orderBy('estado', 'ASC')->get();
 
         $this->docentes = Docentes::all();
+
+        
 
         return view('livewire.division-informatica.solicitudes.programacion-asesorias', compact('vistaRE'));
     }
 
 
-    public function updatedselectDocente($idDocente)
-    {
 
 
-        $this->vista = DB::select('CALL view_horarioHalumno('.$this->idEstudiantes.')');
-        $this->vistaDH = DB::select('CALL view_horarioDocente('.$idDocente.')');
-
-    }
-
-    public function program(){
+    public function crear(){
  
-        $this-> abrirModal2();
+        $this->abrirModal();
     }
-    public function abrirModal2(){
-        $this->programacion = true;
+    public function abrirModal(){
+        $this->modal = true;
     }   
     public function cerrarModal(){
         $this->programacion = false;
@@ -71,23 +66,20 @@ class ProgramacionAsesorias extends Component
 
     }
 
-
-    public function RegistrarSolicitud(){
-        $this->abrirModal2();
-    }
     public function editar($id){
+
 
         $idEstudiante = solicituasesorias::select('idEstudiantes')->where('idSolicituAsesorias',$id)->get();
         $variableidE= $idEstudiante[0]['idEstudiantes'];
-        $Revision = Revision::findOrFail($variableidE);
+       // $Revision = Revision::findOrFail($variableidE);
         $this->idRevicion = $id;
- 
         $this->idEstudiantes = $variableidE;
-        $this->nombre = $Revision->estudiante;
+        $estudiante = Estudiantes::select('nombre', 'apellido')->where('idEstudiantes', $variableidE)->get();
+       $this->nombre = ($estudiante[0]['nombre']." ".$estudiante[0]['apellido']);
 
-        $this->vista = DB::select('CALL view_horarioHalumno('.$variableidE.')');
+        $this->vista = DB::select('CALL view_horario_Extrescolares('.$variableidE.')');
 
-        $this->abrirModal2();
+        $this->abrirModal();
 
     }
 

@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Visualizador</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" wire:click.prevent="cerrarview()" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true close-btn">×</span>
                 </button>
             </div>
@@ -19,6 +19,14 @@
                         <input type="text"
                             class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                             id="estudiante" wire:model="estudiante" readonly>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="numeroControl"
+                            class="block mb-2 text-sm font-bold text-gray-700 ">Número Control</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            id="numeroControl" wire:model="numeroControl" readonly>
                     </div>
 
                     <div class="mb-4">
@@ -47,7 +55,7 @@
                             id="estado" wire:model="estado" readonly>
                     </div>
 
-                    <button type="button" class="btn btn-primary btn-lg btn-block"><span
+                    <button type="button"  class="btn btn-primary btn-lg btn-block"><span
                         class="fas fa-file-download"  data-toggle="modal" data-target="#exampleModal"></span></button>
 
     

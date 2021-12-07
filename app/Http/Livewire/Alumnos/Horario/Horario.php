@@ -4,8 +4,14 @@ namespace App\Http\Livewire\Alumnos\Horario;
 
 use App\Models\Horarios;
 use App\Models\HorariosAlumnos;
-use App\Models\vistas\vista_HorarioGeneral;
+use App\Models\vistas\Vista_HorarioExtrescolar;
 use App\Models\vistas\vista_HorarioAlumnos;
+use App\Models\Dias;
+use App\Models\Extraescolares;
+
+use App\Models\HorarioExtraescolares;
+use RealRashid\SweetAlert\Facades\Alert;
+
 use App\Models\Estudiantes;
 use Livewire\WithPagination;
 use Livewire\Component;
@@ -15,18 +21,23 @@ class Horario extends Component
 {
     public $i=7, $var;
     public $search;
-    public $sort='idHorariosAlumnos';
+    public $sort='idHorarioExtraescolar';
     public $direction='asc';
     use WithPagination;
-    public $vista, $idHorariosAlumnos, $idHorarios, $idEstudiantes, $horarios;		
+    public $vista, $iddia, $idHorarioExtraescolar ,$idExtraescolar, $extraescolares , $HoraInicial, $HoraFinal, $idEstudiantes, $horarios, $dias, $consideraciones;		
     public $modal = false;
     protected $rules = [
-        'idHorarios' => 'required',
- 
+        'idExtraescolar' => 'required',
+        'iddia' => 'required',
+        'HoraInicial' => 'required',
+        'HoraFinal' => 'required',
 
     ];
     protected $messages = [
-        'idHorarios.required' => 'La justificación no puede estar vacío.',
+        'idExtraescolar.required' => 'La justificación no puede estar vacío.',
+        'iddia.required' => 'La justificación no puede estar vacío.',
+        'HoraInicial.required' => 'La justificación no puede estar vacío.',
+        'HoraFinal.required' => 'La justificación no puede estar vacío.',
 
 
     ];
@@ -34,15 +45,19 @@ class Horario extends Component
     public function render()
     {
         $idusuario = auth()->id();
-        $semes = Estudiantes::select('Semestres_idSemestres')->where('Users_id',$idusuario)->get();
-        $idEstudiante = Estudiantes::select('idEstudiantes')->where('Users_id',$idusuario)->get();
+      //  $semes = Estudiantes::select('Semestres_id')->where('id_user',$idusuario)->get();
+        $idEstudiante = Estudiantes::select('idEstudiantes')->where('id_user',$idusuario)->get();
         $variableidE= $idEstudiante[0]['idEstudiantes'];
 
   
-        $Halumno = vista_HorarioAlumnos::where('idEstudiantes', $variableidE)->paginate(5);
+        $Halumno = Vista_HorarioExtrescolar::where('idEstudiantes', $variableidE)->paginate(5);
 
-        $this->horarios = vista_HorarioGeneral::Where('numeroSemestre', $semes[0]['Semestres_idSemestres'])->get();
-        $this->vista = DB::select('CALL view_horarioHalumno('.$variableidE.')');
+      //  $this->horarios = HorarioExtraescolares::Where('numeroSemestre', $semes[0]['Semestres_id'])->get();
+        $this->dias = Dias::all();
+        $this->extraescolares = Extraescolares::all();
+
+        $this->vista = DB::select('CALL view_horario_Extrescolares('.$variableidE.')');
+        
 
     return view('livewire.alumnos.horario.horario', compact('Halumno'));
     }
@@ -83,37 +98,58 @@ class Horario extends Component
     public function editar($id){
         $this->abrirModal();
         $idusuario = auth()->id();
-        $idEstudiante = Estudiantes::select('idEstudiantes')->where('Users_id',$idusuario)->get();
+        $idEstudiante = Estudiantes::select('idEstudiantes')->where('id_user',$idusuario)->get();
         $variableidE= $idEstudiante[0]['idEstudiantes'];
 
-        $HA = HorariosAlumnos::findOrFail($id);
-        $this->idHorariosAlumnos= $id;
-        $this->idHorarios = $HA->idHorarios;
-        $this->idEstudiantes = $HA->variableidE;
+        $HA = HorarioExtraescolares::findOrFail($id);
+        $this->idHorarioExtraescolar= $id;
+        $this->iddia = $HA->iddia;
+        $this->HoraInicial = $HA->HoraInicial;
+        $this->HoraFinal = $HA->HoraFinal;
+        $this->consideraciones = $HA->consideraciones;
+        $this->idExtraescolar = $HA->idExtraescolar;
+        $this->idEstudiantes = $HA->idEstudiantes;
 
         $this->abrirModal();
     }
-    public function borrar($id){
-        HorariosAlumnos::find($id)->delete();
-        session()->flash('message', 'Registro eliminado correctamente.');
+    public function question($id){
+       // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.')->showConfirmButton('Confirm', '#3085d6');
+       // alert()->success('Post Created', '<strong>Successfully</strong>')->toHtml();
 
+       alert()->html("<button type='submit' wire:click=".$this->delete($id)." class='px-2 py-2 font-bold text-white bg-red-500 hover:bg-red-700'></button>",'success');
+     //   HorarioExtraescolares::find($id)->delete();
+    
+     //toast('Registro eliminado!','success');
+        return redirect('/Horario-alumno'); 
+
+    }
+    public function delete($id){
+       // HorarioExtraescolares::find($id)->delete();
+        toast('Registro eliminado!','success');
+        return redirect('/Horario-alumno'); 
     }
     Public function guardar(){
         $this->validate();
 
         $idusuario = auth()->id();
-        $idEstudiante = Estudiantes::select('idEstudiantes')->where('Users_id',$idusuario)->get();
+        $idEstudiante = Estudiantes::select('idEstudiantes')->where('id_user',$idusuario)->get();
         $variableidE= $idEstudiante[0]['idEstudiantes'];
 
-        HorariosAlumnos::updateOrCreate(['idHorariosAlumnos' => $this->idHorariosAlumnos],
+        HorarioExtraescolares::updateOrCreate(['idHorarioExtraescolar' => $this->idHorarioExtraescolar],
         [
-            'idHorarios' => $this->idHorarios,
+            'iddia' =>  $this->iddia,
+            'HoraInicial' =>  $this->HoraInicial,
+            'HoraFinal' =>  $this->HoraFinal,
+            'consideraciones' =>  $this->consideraciones,
+            'idExtraescolar' =>  $this->idExtraescolar,
             'idEstudiantes' => $variableidE,
-    ]);
-    session()->flash('message',
-        $this->idHorariosAlumnos ? '¡Actualización exitosa!' : '¡Alta Exitosa!');
 
-        $this->cerrarModal();
+
+    ]);
+
+        $this->idHorarioExtraescolar ? toast('Tú registro fue actualizado correctamente','success') : toast('Registro Guardado con éxito','success');
+       // $this->cerrarModal();
+        return redirect('/Horario-alumno');
     }
 
 }

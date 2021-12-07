@@ -27,12 +27,20 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name'=> 'SolicitarAsesoria'])->syncRoles([$roleALUMNO]);
         Permission::create(['name'=> 'HorarioAlumno'])->syncRoles([$roleALUMNO]);
+        Permission::create(['name'=> 'notifications.get.ALUMNOS'])->syncRoles([$roleALUMNO]);
+        Permission::create(['name'=> 'AsesoriasAlumnos'])->syncRoles([$roleALUMNO]);
+        Permission::create(['name'=> 'AlumnosAsesorias'])->syncRoles([$roleALUMNO]);
 
+        
         Permission::create(['name'=> 'RevisionAsesoria'])->syncRoles([$roleDIVISION]);
         Permission::create(['name'=> 'ProgramacionAsesoria'])->syncRoles([$roleDIVISION]);
         Permission::create(['name'=> 'CrearProgramacion'])->syncRoles([$roleDIVISION]);
+        Permission::create(['name'=> 'validacionAsesoria'])->syncRoles([$roleDIVISION]);
 
-        Permission::create(['name'=> 'HorarioDocente'])->syncRoles([$roleDOCENTE]);
+        Permission::create(['name'=> 'notifications.get.VINCULACION'])->syncRoles([$roleALUMNO]);
+        
+        Permission::create(['name'=> 'AsesoriasDocente'])->syncRoles([$roleDOCENTE]);
+        Permission::create(['name'=> 'Docentes-Asesoria'])->syncRoles([$roleDOCENTE]);
 
 
     }

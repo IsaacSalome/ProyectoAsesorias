@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
     $this->call(DiasSeeder::class);    
     $this->call(ModalidadesSeeder::class);    
     $this->call(MateriaSeeder::class);    
+    $this->call(extraescolaresSeeder::class);    
 
         User::create([
             'id_user' => 1,

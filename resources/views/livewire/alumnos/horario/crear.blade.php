@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registro de Horario</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Registro de Horario Extraescolar</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true close-btn">×</span>
                 </button>
@@ -16,19 +16,82 @@
 
 
                     <div class="mb-4">
-                        <label for="idHorarios" class="block mb-2 text-sm font-bold text-gray-700 ">Horarios</label>
-                        <select id="idHorarios" wire:model="idHorarios"
+                        <label for="idExtraescolar" class="block mb-2 text-sm font-bold text-gray-700 ">Extraescolar</label>
+                        <select id="idExtraescolar" wire:model="idExtraescolar"
                             class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                            name="idHorarios">
-                            <option value=" ">Selecciona un Materia... </option>
+                            name="idExtraescolar ">
+                            <option value=" ">Selecciona una Extraescolar... </option>
 
-                            @foreach ($horarios as $hor)
-                            <option value="{{ $hor->idHorarios }}">{{ $hor->dia }} {{$hor->Horario}} {{$hor->materia}} {{$hor->docente}} 
+                            @foreach ($extraescolares as $Extra)
+                            <option value="{{ $Extra->idExtraescolar }}"> {{$Extra->nombreExtraescolar}} </option>
+                            @endforeach
+                        </select>
+                        @error('idExtraescolar') <span style="color:red;" class="error">{{ $message }}</span>
+                        @enderror
+
+                    </div>
+
+
+                    <div class="mb-4">
+                        <label for="iddia" class="block mb-2 text-sm font-bold text-gray-700 ">dia</label>
+
+
+                        <select id="iddia" wire:model="iddia"
+                            class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            name="select">
+                            <option value=" ">Selecciona una Dia... </option>
+
+                            @foreach ($dias as $di)
+                            <option value="{{ $di->idDia }}">{{ $di->descripcion }}
                             </option>
                             @endforeach
                         </select>
-                        @error('idHorarios') <span style="color:red;" class="error">{{ $message }}</span>
-                        @enderror
+                        @error('iddia') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
+
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="HoraInicial" class="block mb-2 text-sm font-bold text-gray-700 ">Hora Inicial</label>
+
+                        <select id="HoraInicial" wire:model="HoraInicial"
+                            class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            name="select">
+                            <option value=" ">Selecciona una hora... </option>
+
+                            @for ($i=7; $i <=20; $i++) <option value="{{$i}}:00:00">{{ $i }}</option>
+                                @endfor
+
+
+                        </select>
+                        @error('HoraInicial') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="HoraFinal" class="block mb-2 text-sm font-bold text-gray-700 ">Hora Final</label>
+
+                        <select id="HoraFinal" wire:model="HoraFinal"
+                            class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            name="select">
+                            <option value=" ">Selecciona una hora... </option>
+
+                            @for ($i=7; $i <=20; $i++) <option value="{{$i}}:00:00">{{ $i }}</option>
+                                @endfor
+
+
+                        </select>
+                        @error('HoraFinal') <span style="color:red;" class="error">{{ $message }}</span> @enderror
+
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="consideraciones" class="block mb-2 text-sm font-bold text-gray-700 ">Observaciones</label>
+
+                        <Textarea type="text"
+                        class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        id="consideraciones" wire:model="consideraciones"></Textarea>
+                        @error('consideraciones') <span style="color:red;" class="error">{{ $message }}</span> @enderror
 
                     </div>
 

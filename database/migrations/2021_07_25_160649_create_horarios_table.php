@@ -17,7 +17,7 @@ class CreateHorariosTable extends Migration
             $table->increments('idHorarios');
 
             $table->unsignedInteger('iddia'); 
-            $table->foreign('iddia')->references('idSolicituAsesorias')->on('solicituasesorias');
+            $table->foreign('iddia')->references('idDia')->on('dias');
 
             $table->time('HoraInicial');
             $table->time('HoraFinal');

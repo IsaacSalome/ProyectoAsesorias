@@ -50,7 +50,7 @@ class Horario extends Component
     {
         $idusuario = auth()->id();
         
-        $idDocentes  = Docentes::select('idDocentes')->where('Users_id',$idusuario)->get();
+        $idDocentes  = Docentes::select('idDocentes')->where('id_user',$idusuario)->get();
         $iddocentes = $idDocentes[0]['idDocentes'] ;
 
         $horarios= vista_HorarioGeneral::Where('idDocentes', $iddocentes)->paginate(5);
@@ -61,7 +61,7 @@ class Horario extends Component
         $this->dias = Dias::all();
 
         $this->vista = DB::select('CALL view_horarioDocente('.$iddocentes.')');
-
+        
         return view('livewire.docentes.horarios.horario', compact('horarios'));
     }
 

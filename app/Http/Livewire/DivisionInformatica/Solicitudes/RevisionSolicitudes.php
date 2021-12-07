@@ -13,18 +13,16 @@ use Illuminate\Support\Facades\DB;
 
 class RevisionSolicitudes extends Component
 {
-    public  $notificacion,$notif, $estado, $idSolicitud, $estudiante, $justificacion, $materiaSolicitada;
+    public  $notificacion,$notif, $estado, $numeroControl, $idSolicitud, $estudiante, $justificacion, $materiaSolicitada;
     use WithPagination;
     public $modal = false;
     public $visualizar = false;
 
     public function render()
     {
-        $this->notificacion = DB::select('CALL notifi_solicitud');
-        $this->notif = notif::all();
 
 
-        $vistaRE = Revision::where('estado', 'revisión')->orwhere('estado', 'Rechazada')->paginate(5);
+        $vistaRE = Revision::where('estado', '4')->orwhere('estado', '2')->paginate(5);
 
         return view('livewire.division-informatica.solicitudes.revision-solicitudes', compact('vistaRE'));
     }
@@ -38,24 +36,28 @@ class RevisionSolicitudes extends Component
         $this->modal = true;
     }   
     public function cerrarModal(){
+
         $this->modal = false;
     }
+    public function limpiar(){
 
-    public function visualizar(){
-        $this->abrirview();
     }
+
     public function abrirview(){
+
         $this->visualizar = true;
     }   
     public function cerrarview(){
-        $this->movisualizardal = false;
+        $this->visualizar = false;
     }
 
 
 
     public function view($id){
+        $this->cerrarModal();
         $Revision = Revision::findOrFail($id);
         $this->idSolicitud= $id;
+        $this->numeroControl = $Revision->numeroControl;
         $this->estudiante = $Revision->estudiante;
         $this->materiaSolicitada =$Revision->materiaSolicitada;
         $this->justificacion =$Revision->justificacion;
@@ -66,6 +68,7 @@ class RevisionSolicitudes extends Component
 
     
     public function editar($id){
+        $this->cerrarview();
         $solicitud = solicituasesorias::findOrFail($id);
         $this->idSolicitud= $id;
         $this->estado = $solicitud->estado;
@@ -90,7 +93,9 @@ class RevisionSolicitudes extends Component
         
             notif::create($datos_notif);
         }
-        $this->cerrarModal();
+       toast('Tú registro fue actualizado correctamente','success');
+
+       return redirect('/Revision-Asesoria');
 
     }
     public function notifydelete($id){

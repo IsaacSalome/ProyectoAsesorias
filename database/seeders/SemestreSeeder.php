@@ -15,31 +15,31 @@ class SemestreSeeder extends Seeder
     public function run()
     {
         Semestres::create([
-            'numeroSemestre' => 'I',
+            'numeroSemestre' => '1',
 
         ]);    
         Semestres::create([
-            'numeroSemestre' => 'II',
+            'numeroSemestre' => '2',
 
         ]);    
         Semestres::create([
-            'numeroSemestre' => 'III',
+            'numeroSemestre' => '3',
 
         ]);    
         Semestres::create([
-            'numeroSemestre' => 'IV',
+            'numeroSemestre' => '4',
 
         ]);    
         Semestres::create([
-            'numeroSemestre' => 'V',
+            'numeroSemestre' => '5',
 
         ]);    
         Semestres::create([
-            'numeroSemestre' => 'VI',
+            'numeroSemestre' => '6',
 
         ]);    
         Semestres::create([
-            'numeroSemestre' => 'VII',
+            'numeroSemestre' => '7',
 
         ]);    
     }

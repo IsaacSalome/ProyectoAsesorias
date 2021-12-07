@@ -13,9 +13,7 @@ class CreateAsesoriasTable extends Migration
      */
     public function up()
     {
-        //'idAsesorias'  asesorias
-        //['fechaAsesoria', 'horaInicio', 'horaFinal', 'Estudiantes_idEstudiantes', 'Docentes_idDocentes', 'idSolicitud']
-        Schema::create('asesorias', function (Blueprint $table) {
+          Schema::create('asesorias', function (Blueprint $table) {
             $table->increments('idAsesorias');
             $table->date('fechaAsesoria');
             $table->time('horaInicio');
@@ -29,7 +27,9 @@ class CreateAsesoriasTable extends Migration
 
             $table->unsignedInteger('idSolicitud'); 
             $table->foreign('idSolicitud')->references('idSolicituAsesorias')->on('solicituasesorias');
-
+            
+            $table->tinyInteger('ConfimacionDocente')->nullable();
+            $table->tinyInteger('ConfirmacionAlumno')->nullable();
 
             $table->timestamps();
         });

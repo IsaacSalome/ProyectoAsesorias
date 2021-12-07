@@ -235,17 +235,43 @@ return [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
+        
+        [
+            'type'         => 'navbar-notification',
+            'id'           => 'my-notification',
+            'icon'         => 'fas fa-bell',
+            'can'          => 'SolicitarAsesoria',
 
+            'url'          => '#',
+            'topnav_right' => true,
+            'dropdown_mode'   => true,
+            'dropdown_flabel' => 'Revisar asesorias',
+            'update_cfg'   => [
+                'url' => 'notifications/get',
+                'period' => 30,
+            ],
+        ],
+        [
+            'type'         => 'navbar-notification',
+            'id'           => 'my-notification',
+            'icon'         => 'fas fa-bell',
+            'can'          => ['RevisionAsesoria', 'ProgramacionAsesoria'],
+            'url'          => '#',
+            'topnav_right' => true,
+            'dropdown_mode'   => true,
+            'dropdown_flabel' => 'Revisar asesorias',
+            'update_cfg'   => [
+                'url' => 'notifications/getvinculacion',
+                'period' => 30,
+            ],
+        ],
+    
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
+        
         
         ['header' => 'Opciones de Administrador', 'can' => 'materias'],
         [
@@ -297,7 +323,8 @@ return [
             'text' => 'Solicitar Asesoria',
             'url'  => '/Solicitar-Asesoria',
             'icon' => 'fas fa-ad',
-            'can' => 'SolicitarAsesoria'
+            'can' => 'SolicitarAsesoria',
+
 
         ],
         [
@@ -307,15 +334,21 @@ return [
             'can' => 'HorarioAlumno'
 
         ],
+        [
+            'text' => 'Asesorias',
+            'url'  => '/Asesorias-alumno',
+            'icon' => 'fas fa-ad',
+            'can' => 'AsesoriasAlumnos'
+        ],   
+
         ['header' => 'Opciones de Docente', 'can' => 'HorarioDocente'],
 
-        [
-            'text' => 'Horario',
-            'url'  => '/Docente/Horarios',
-            'icon' => 'fas fa-clock',
-            'can' => 'HorarioDocente'
-
-        ],
+         [
+            'text' => 'Asesorias',
+            'url'  => '/Asesorias',
+            'icon' => 'fas fa-ad',
+            'can' => 'AsesoriasDocente'
+        ],   
     ],
 
     /*
